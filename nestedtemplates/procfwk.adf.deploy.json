@@ -18,7 +18,32 @@
             "metadata": {
                 "description": "Location for your data factory"
             }
-        }
+        },
+        "adfRoleNameGuid": {
+            "type": "string",
+            "defaultValue": "[newGuid()]",
+            "metadata": {
+                "description": "A new GUID used to identify the role assignment"
+            }
+        },
+        "adfBuiltInRoleType": {
+            "type": "string",
+            "defaultValue": "Owner",
+            "allowedValues": [
+                "Owner",
+                "Contributor",
+                "Reader"
+            ],
+            "metadata": {
+                "description": "Built-in role to assign"
+            }
+        }        
+
+    },
+    "variables": {
+        "Owner": "[concat('/subscriptions/', subscription().subscriptionId, '/providers/Microsoft.Authorization/roleDefinitions/', '8e3af657-a8ff-443c-a75c-2fe8c4bcb635')]",
+        "Contributor": "[concat('/subscriptions/', subscription().subscriptionId, '/providers/Microsoft.Authorization/roleDefinitions/', 'b24988ac-6180-42a0-ab88-20f7382dd24c')]",
+        "Reader": "[concat('/subscriptions/', subscription().subscriptionId, '/providers/Microsoft.Authorization/roleDefinitions/', 'acdd72a7-3385-48ef-bd42-f606fba81ae7')]"        
     },
     "resources": [
         {
@@ -34,6 +59,7 @@
 
         {
             "type": "Microsoft.Authorization/roleAssignments",
+            "condition": false,
             "apiVersion": "2018-09-01-preview",
             "name": "[guid(resourceGroup().id)]",
             "properties": {
@@ -43,11 +69,25 @@
         },       
 
         {
+            "type": "Microsoft.Authorization/roleAssignments",
+            "apiVersion": "2020-04-01-preview",
+            "name": "[parameters('adfRoleNameGuid')]",
+            "scope": "[concat('Microsoft.DataFactory/factories', '/', parameters('adfName'))]",
+            "dependsOn": [
+                "[parameters('adfName')]"
+            ],
+            "properties": {
+                "roleDefinitionId": "[variables(parameters('adfBuiltInRoleType'))]",
+                "principalId": "[reference(resourceId('Microsoft.DataFactory/factories', parameters('adfName')), '2018-06-01', 'Full').identity.principalId]"
+            }
+        },
+
+        {
             "name": "[concat(parameters('keyVaultName'), '/add')]",
             "type": "Microsoft.KeyVault/vaults/accessPolicies",
             "condition": false,
             "dependson": [
-                "[resourceId('Microsoft.DataFactory/factories',parameters('adfName'))]"
+                "[resourceId('Microsoft.DataFactory/factories', parameters('adfName'))]"
             ],
             "location": "[parameters('location')]",
             "apiVersion": "2019-09-01",
