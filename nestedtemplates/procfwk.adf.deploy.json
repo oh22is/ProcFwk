@@ -6,6 +6,12 @@
             "type": "string",
             "defaultValue": "myv2datafactory"
         },
+        "keyVaultName": {
+            "type": "string",
+            "metadata": {
+                "description": "description"
+            }
+        },
         "location": {
             "type": "string",
             "defaultValue": "[resourceGroup().location]",
@@ -24,6 +30,29 @@
                 "type": "SystemAssigned"
             },
             "properties": {}
+        },
+
+        {
+            "name": "[concat(parameters('keyVaultName'), '/add')]",
+            "type": "Microsoft.KeyVault/vaults/accessPolicies",
+            "dependson": [
+                "[resourceId('Microsoft.DataFactory/factories',parameters('adfName'))]"
+            ],
+            "location": "[parameters('location')]",
+            "apiVersion": "2019-09-01",
+            "properties": {
+                "accessPolicies": [
+                {
+                    "tenantId": "[reference(resourceId('Microsoft.DataFactory/factories', parameters('adfName')), '2020-09-01', 'Full').identity.tenantId]",
+                    "objectId": "[reference(resourceId('Microsoft.DataFactory/factories', parameters('adfName')), '2020-09-01', 'Full').identity.principalId]",
+                    "permissions": {
+                        "secrets": [
+                            "get"
+                        ]
+                    }
+                }
+                ]
+            }
         }
     ]
 }
