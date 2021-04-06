@@ -14,9 +14,6 @@
         "keyVaultSku": {
             "type": "String"
         },
-        "keyVaultAccessPolicies": {
-            "type": "Array"
-        },
         "keyVaultEnabledForDeployment": {
             "type": "Bool"
         },
@@ -53,7 +50,6 @@
                 "enabledForTemplateDeployment": "[parameters('keyVaultEnabledForTemplateDeployment')]",
                 "enabledForDiskEncryption": "[parameters('keyVaultEnabledForDiskEncryption')]",
                 "enableRbacAuthorization": "[parameters('keyVaultEnableRbacAuthorization')]",
-                "accessPolicies": "[parameters('keyVaultAccessPolicies')]",
                 "tenantId": "[parameters('tenant')]",
                 "sku": {
                     "name": "[parameters('keyVaultSku')]",
