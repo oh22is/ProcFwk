@@ -139,7 +139,6 @@
             "apiVersion": "2015-01-01-preview",
             "name": "[parameters('adfName')]",
             "location": "[if(equals(parameters('adfVersion'), 'V1'), parameters('location'), 'eastus')]",
-            "tags": "[ if(contains(parameters('tagsByResource'), 'Microsoft.DataFactory/dataFactories'), parameters('tagsByResource')['Microsoft.DataFactory/dataFactories'], json('{}')) ]",
             "properties": {},
             "condition": "[equals(parameters('adfVersion'), 'V1')]"
         }       
