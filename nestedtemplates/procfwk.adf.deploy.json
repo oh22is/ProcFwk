@@ -5,9 +5,6 @@
         "location": {
             "type": "String"
         },
-        "tagsByResource": {
-            "type": "Object"
-        },
         "adfName": {
             "type": "String"
         },
