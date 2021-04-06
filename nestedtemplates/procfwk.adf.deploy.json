@@ -33,6 +33,16 @@
         },
 
         {
+            "type": "Microsoft.Authorization/roleAssignments",
+            "apiVersion": "2018-09-01-preview",
+            "name": "[guid(resourceGroup().id)]",
+            "properties": {
+                "roleDefinitionId": "[concat('/subscriptions/', subscription().subscriptionId, '/providers/Microsoft.Authorization/roleDefinitions/', 'acdd72a7-3385-48ef-bd42-f606fba81ae7')]",
+                "principalId": "[reference(resourceId('Microsoft.DataFactory/factories', parameters('adfName')), '2018-06-01', 'Full').identity.principalId]"
+            }
+        },       
+
+        {
             "name": "[concat(parameters('keyVaultName'), '/add')]",
             "type": "Microsoft.KeyVault/vaults/accessPolicies",
             "condition": false,
