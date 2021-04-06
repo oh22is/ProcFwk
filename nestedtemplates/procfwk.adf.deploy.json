@@ -1,0 +1,151 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "location": {
+            "type": "String"
+        },
+        "tagsByResource": {
+            "type": "Object"
+        },
+        "adfName": {
+            "type": "String"
+        },
+        "adfVersion": {
+            "defaultValue": "V2",
+            "type": "String"
+        },
+        "adfApiVersion": {
+            "defaultValue": "2018-06-01",
+            "type": "String"
+        },
+        "adfvNetEnabled": {
+            "defaultValue": false,
+            "type": "Bool"
+        },
+        "adfPublicNetworkAccess": {
+            "defaultValue": true,
+            "type": "Bool"
+        },
+        "adfGitConfigureLater": {
+            "defaultValue": true,
+            "type": "Bool"
+        },
+        "adfGitRepoType": {
+            "defaultValue": "FactoryVSTSConfiguration",
+            "type": "String"
+        },
+        "adfGitAccountName": {
+            "defaultValue": "",
+            "type": "String"
+        },
+        "adfGitProjectName": {
+            "defaultValue": "",
+            "type": "String"
+        },
+        "adfGitRepositoryName": {
+            "defaultValue": "",
+            "type": "String"
+        },
+        "adfGitCollaborationBranch": {
+            "defaultValue": "master",
+            "type": "String"
+        },
+        "adfGitRootFolder": {
+            "defaultValue": "/",
+            "type": "String"
+        },
+        "adfUserAssignedIdentities": {
+            "defaultValue": {
+                "type": "SystemAssigned"
+            },
+            "type": "Object"
+        },
+        "adfUserAssignedIdentitiesStr": {
+            "defaultValue": "",
+            "type": "String"
+        },
+        "adfVaultBaseUrl": {
+            "defaultValue": "",
+            "type": "String"
+        },
+        "adfKeyName": {
+            "defaultValue": "",
+            "type": "String"
+        },
+        "adfKeyVersion": {
+            "defaultValue": "",
+            "type": "String"
+        },
+        "adfEnableCMK": {
+            "defaultValue": false,
+            "type": "Bool"
+        },
+        "adfCmkIdentity": {
+            "defaultValue": "",
+            "type": "String"
+        }
+
+
+
+    },
+    "resources": [
+        {
+            "type": "Microsoft.DataFactory/factories",
+            "apiVersion": "2018-06-01",
+            "name": "[parameters('adfName')]",
+            "location": "[parameters('location')]",
+            "tags": "[ if(contains(parameters('tagsByResource'), 'Microsoft.DataFactory/factories'), parameters('tagsByResource')['Microsoft.DataFactory/factories'], json('{}')) ]",
+            "identity": "[if(parameters('adfEnableCMK'),json(parameters('adfUserAssignedIdentitiesStr')), parameters('adfUserAssignedIdentities'))]",
+            "properties": {
+                "repoConfiguration": "[if(bool(parameters('adfGitConfigureLater')), json('null'), json(concat('{\"type\": \"', parameters('adfGitRepoType'), '\",','\"accountName\": \"', parameters('adfGitAccountName'), '\",','\"repositoryName\": \"', parameters('adfGitRepositoryName'), '\",', if(equals(parameters('adfGitRepoType'), 'FactoryVSTSConfiguration'), concat('\"projectName\": \"', parameters('adfGitProjectName'), '\",'), ''),'\"collaborationBranch\": \"', parameters('adfGitCollaborationBranch'), '\",','\"rootFolder\": \"', parameters('adfGitRootFolder'), '\"}')))]",
+                "publicNetworkAccess": "[if(bool(parameters('adfPublicNetworkAccess')), 'Enabled', 'Disabled')]",
+                "encryption": "[if(bool(parameters('adfEnableCMK')), json(concat('{\"identity\":{\"userAssignedIdentity\":\"', parameters('adfCmkIdentity'), '\"},','\"VaultBaseUrl\": \"', parameters('adfVaultBaseUrl'), '\",','\"KeyName\": \"', parameters('adfKeyName'), '\",','\"KeyVersion\": \"', parameters('adfKeyVersion'), '\"}')), json('null'))]"
+            },
+            "resources": [
+                {
+                    "type": "Microsoft.DataFactory/factories/managedVirtualNetworks",
+                    "apiVersion": "2018-06-01",
+                    "name": "[concat(parameters('adfName'), '/default')]",
+                    "dependsOn": [
+                        "[concat('Microsoft.DataFactory/factories/', parameters('adfName'))]"
+                    ],
+                    "properties": {},
+                    "condition": "[and(equals(parameters('adfVersion'), 'V2'), parameters('adfvNetEnabled'))]"
+                },
+                {
+                    "type": "Microsoft.DataFactory/factories/integrationRuntimes",
+                    "apiVersion": "2018-06-01",
+                    "name": "[concat(parameters('adfName'), '/AutoResolveIntegrationRuntime')]",
+                    "dependsOn": [
+                        "[concat('Microsoft.DataFactory/factories/', parameters('adfName'))]",
+                        "[concat('Microsoft.DataFactory/factories/', parameters('adfName'), '/managedVirtualNetworks/default')]"
+                    ],
+                    "properties": {
+                        "type": "Managed",
+                        "managedVirtualNetwork": {
+                            "referenceName": "default",
+                            "type": "ManagedVirtualNetworkReference"
+                        },
+                        "typeProperties": {
+                            "computeProperties": {
+                                "location": "AutoResolve"
+                            }
+                        }
+                    },
+                    "condition": "[and(equals(parameters('adfVersion'), 'V2'), parameters('adfvNetEnabled'))]"
+                }
+            ],
+            "condition": "[equals(parameters('adfVersion'), 'V2')]"
+        },
+        {
+            "type": "Microsoft.DataFactory/dataFactories",
+            "apiVersion": "2015-01-01-preview",
+            "name": "[parameters('adfName')]",
+            "location": "[if(equals(parameters('adfVersion'), 'V1'), parameters('location'), 'eastus')]",
+            "tags": "[ if(contains(parameters('tagsByResource'), 'Microsoft.DataFactory/dataFactories'), parameters('tagsByResource')['Microsoft.DataFactory/dataFactories'], json('{}')) ]",
+            "properties": {},
+            "condition": "[equals(parameters('adfVersion'), 'V1')]"
+        }       
+    ]
+}

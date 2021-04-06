@@ -1,0 +1,69 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "location": {
+            "type": "String"
+        },
+        "tenant": {
+            "type": "String"
+        },   
+        "keyVaultName": {
+            "type": "String"
+        },   
+        "keyVaultSku": {
+            "type": "String"
+        },
+        "keyVaultAccessPolicies": {
+            "type": "Array"
+        },
+        "keyVaultEnabledForDeployment": {
+            "type": "Bool"
+        },
+        "keyVaultEnabledForTemplateDeployment": {
+            "type": "Bool"
+        },
+        "keyVaultEnabledForDiskEncryption": {
+            "type": "Bool"
+        },
+        "keyVaultEnableRbacAuthorization": {
+            "type": "Bool"
+        },
+        "keyVaultEnableSoftDelete": {
+            "type": "Bool"
+        },
+        "keyVaultSoftDeleteRetentionInDays": {
+            "type": "Int"
+        },
+        "keyVaultNetworkAcls": {
+            "type": "Object"
+        }
+    },
+    "variables": {},
+    "resources": [
+        {
+            "type": "Microsoft.KeyVault/vaults",
+            "apiVersion": "2018-02-14",
+            "name": "[parameters('keyVaultName')]",
+            "location": "[parameters('location')]",
+            "dependsOn": [],
+            "tags": {},
+            "properties": {
+                "enabledForDeployment": "[parameters('keyVaultEnabledForDeployment')]",
+                "enabledForTemplateDeployment": "[parameters('keyVaultEnabledForTemplateDeployment')]",
+                "enabledForDiskEncryption": "[parameters('keyVaultEnabledForDiskEncryption')]",
+                "enableRbacAuthorization": "[parameters('keyVaultEnableRbacAuthorization')]",
+                "accessPolicies": "[parameters('keyVaultAccessPolicies')]",
+                "tenantId": "[parameters('tenant')]",
+                "sku": {
+                    "name": "[parameters('keyVaultSku')]",
+                    "family": "A"
+                },
+                "enableSoftDelete": "[parameters('keyVaultEnableSoftDelete')]",
+                "softDeleteRetentionInDays": "[parameters('keyVaultSoftDeleteRetentionInDays')]",
+                "networkAcls": "[parameters('keyVaultNetworkAcls')]"
+            }
+        }
+    ],
+    "outputs": {}
+}
