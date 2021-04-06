@@ -92,7 +92,6 @@
             "apiVersion": "2018-06-01",
             "name": "[parameters('adfName')]",
             "location": "[parameters('location')]",
-            "tags": "[ if(contains(parameters('tagsByResource'), 'Microsoft.DataFactory/factories'), parameters('tagsByResource')['Microsoft.DataFactory/factories'], json('{}')) ]",
             "identity": "[if(parameters('adfEnableCMK'),json(parameters('adfUserAssignedIdentitiesStr')), parameters('adfUserAssignedIdentities'))]",
             "properties": {
                 "repoConfiguration": "[if(bool(parameters('adfGitConfigureLater')), json('null'), json(concat('{\"type\": \"', parameters('adfGitRepoType'), '\",','\"accountName\": \"', parameters('adfGitAccountName'), '\",','\"repositoryName\": \"', parameters('adfGitRepositoryName'), '\",', if(equals(parameters('adfGitRepoType'), 'FactoryVSTSConfiguration'), concat('\"projectName\": \"', parameters('adfGitProjectName'), '\",'), ''),'\"collaborationBranch\": \"', parameters('adfGitCollaborationBranch'), '\",','\"rootFolder\": \"', parameters('adfGitRootFolder'), '\"}')))]",
