@@ -45,6 +45,16 @@
     "variables": {},
     "resources": [
         {
+            "apiVersion": "2018-06-01",
+            "name": "[parameters('adfName')]",
+            "location": "[parameters('location')]",
+            "type": "Microsoft.DataFactory/factories",
+            "identity": {
+                "type": "SystemAssigned"
+            },
+            "properties": {}
+        },
+        {
             "type": "Microsoft.KeyVault/vaults",
             "apiVersion": "2018-02-14",
             "name": "[parameters('keyVaultName')]",
