@@ -43,8 +43,8 @@
             "properties": {
                 "accessPolicies": [
                 {
-                    "tenantId": "[reference(resourceId('Microsoft.DataFactory/factories', parameters('adfName')), '2020-09-01', 'Full').identity.tenantId]",
-                    "objectId": "[reference(resourceId('Microsoft.DataFactory/factories', parameters('adfName')), '2020-09-01', 'Full').identity.principalId]",
+                    "tenantId": "[reference(resourceId('Microsoft.DataFactory/factories', parameters('adfName')), '2018-06-01', 'Full').identity.tenantId]",
+                    "objectId": "[reference(resourceId('Microsoft.DataFactory/factories', parameters('adfName')), '2018-06-01', 'Full').identity.principalId]",
                     "permissions": {
                         "secrets": [
                             "get"
