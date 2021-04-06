@@ -7,7 +7,13 @@
         },
         "tenant": {
             "type": "String"
-        },   
+        }, 
+        "adfName": {
+            "type": "string",
+            "metadata": {
+                "description": "description"
+            }
+        },
         "keyVaultName": {
             "type": "String"
         },   
@@ -43,13 +49,26 @@
             "apiVersion": "2018-02-14",
             "name": "[parameters('keyVaultName')]",
             "location": "[parameters('location')]",
-            "dependsOn": [],
+            "dependsOn": [
+                "[resourceId('Microsoft.DataFactory/factories',parameters('adfName'))]"
+            ],
             "tags": {},
             "properties": {
                 "enabledForDeployment": "[parameters('keyVaultEnabledForDeployment')]",
                 "enabledForTemplateDeployment": "[parameters('keyVaultEnabledForTemplateDeployment')]",
                 "enabledForDiskEncryption": "[parameters('keyVaultEnabledForDiskEncryption')]",
                 "enableRbacAuthorization": "[parameters('keyVaultEnableRbacAuthorization')]",
+                "accessPolicies": [
+                {
+                    "tenantId": "[reference(resourceId('Microsoft.DataFactory/factories', parameters('adfName')), '2018-06-01', 'Full').identity.tenantId]",
+                    "objectId": "[reference(resourceId('Microsoft.DataFactory/factories', parameters('adfName')), '2018-06-01', 'Full').identity.principalId]",
+                    "permissions": {
+                        "secrets": [
+                            "get"
+                        ]
+                    }
+                }
+                ],
                 "tenantId": "[parameters('tenant')]",
                 "sku": {
                     "name": "[parameters('keyVaultSku')]",

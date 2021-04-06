@@ -35,6 +35,7 @@
         {
             "name": "[concat(parameters('keyVaultName'), '/add')]",
             "type": "Microsoft.KeyVault/vaults/accessPolicies",
+            "condition": false,
             "dependson": [
                 "[resourceId('Microsoft.DataFactory/factories',parameters('adfName'))]"
             ],
