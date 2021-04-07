@@ -27,18 +27,22 @@
             "type": "SecureString"
         },
         "SQLCollation": {
+            "defaultValue": "SQL_Latin1_General_CP1_CI_AS",
             "type": "String"
         },
         "SQLDatabaseName": {
             "type": "String"
         },
         "SQLTier": {
+            "defaultValue": "Standard",
             "type": "String"
         },
         "SQLSkuName": {
+            "defaultValue": "S0",
             "type": "String"
         },
         "SQLMaxSizeBytes": {
+            "defaultValue": 268435456000,
             "type": "Int"
         },
         "SQLServerName": {
@@ -212,6 +216,7 @@
             "defaultValue": "[resourceGroup().name]"
         },
         "funcAlwaysOn": {
+            "defaultValue": false,
             "type": "Bool"
         },
         "funcStorageAccountName": {
@@ -221,18 +226,23 @@
             "type": "Bool"
         },
         "funcSku": {
+            "defaultValue": "Dynamic",
             "type": "String"
         },
         "funcSkuCode": {
+            "defaultValue": "Y1",
             "type": "String"
         },
         "funcWorkerSize": {
+            "defaultValue": "0",
             "type": "String"
         },
         "funcWorkerSizeId": {
+            "defaultValue": "0",
             "type": "String"
         },
         "funcNumberOfWorkers": {
+            "defaultValue": "1",
             "type": "String"
         },  
         
@@ -242,28 +252,41 @@
             "type": "String"
         },   
         "keyVaultSku": {
+            "defaultValue": "Standard",
             "type": "String"
         },
 
         "keyVaultEnabledForDeployment": {
+            "defaultValue": false,
             "type": "Bool"
         },
         "keyVaultEnabledForTemplateDeployment": {
+            "defaultValue": false,
             "type": "Bool"
         },
         "keyVaultEnabledForDiskEncryption": {
+            "defaultValue": false,
             "type": "Bool"
         },
         "keyVaultEnableRbacAuthorization": {
+            "defaultValue": false,
             "type": "Bool"
         },
         "keyVaultEnableSoftDelete": {
+            "defaultValue": true,
             "type": "Bool"
         },
         "keyVaultSoftDeleteRetentionInDays": {
+            "defaultValue": 90,
             "type": "Int"
         },
         "keyVaultNetworkAcls": {
+            "defaultValue": {
+                "defaultAction": "allow",
+                "bypass": "AzureServices",
+                "ipRules": [],
+                "virtualNetworkRules": []
+            },
             "type": "Object"
         }              
               
