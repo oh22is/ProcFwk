@@ -1,0 +1,620 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "location": {
+            "defaultValue": "westeurope",
+            "type": "String"
+        },
+        "subscriptionId": {
+            "defaultValue": "[subscription().subscriptionId]",
+            "type": "String"
+        },
+        "tenant": {
+            "defaultValue": "[subscription().tenantId]",
+            "type": "String"
+        }, 
+                        
+        "adfName": {
+            "defaultValue": "defaultADFName",
+            "type": "String"
+        },
+
+        "SQLAdministratorLogin": {
+            "type": "String"
+        },
+        "SQLAdministratorLoginPassword": {
+            "type": "SecureString"
+        },
+        "SQLCollation": {
+            "type": "String"
+        },
+        "SQLDatabaseName": {
+            "type": "String"
+        },
+        "SQLTier": {
+            "type": "String"
+        },
+        "SQLSkuName": {
+            "type": "String"
+        },
+        "SQLMaxSizeBytes": {
+            "type": "Int"
+        },
+        "SQLServerName": {
+            "type": "String"
+        },
+        "SQLSampleName": {
+            "defaultValue": "",
+            "type": "String"
+        },
+        "SQLZoneRedundant": {
+            "defaultValue": false,
+            "type": "Bool"
+        },
+        "SQLLicenseType": {
+            "defaultValue": "",
+            "type": "String"
+        },
+        "SQLReadScaleOut": {
+            "defaultValue": "Disabled",
+            "type": "String"
+        },
+        "SQLNumberOfReplicas": {
+            "defaultValue": 0,
+            "type": "Int"
+        },
+        "SQLMinCapacity": {
+            "defaultValue": "",
+            "type": "String"
+        },
+        "SQLAutoPauseDelay": {
+            "defaultValue": "",
+            "type": "String"
+        },
+        "SQLEnableADS": {
+            "defaultValue": false,
+            "type": "Bool"
+        },
+        "SQLAllowAzureIps": {
+            "defaultValue": true,
+            "type": "Bool"
+        },
+        "SQLDatabaseTags": {
+            "defaultValue": {},
+            "type": "Object"
+        },
+        "SQLServerTags": {
+            "defaultValue": {},
+            "type": "Object"
+        },
+        "SQLEnableVA": {
+            "defaultValue": false,
+            "type": "Bool"
+        },
+        "SQLUseVAManagedIdentity": {
+            "defaultValue": false,
+            "type": "Bool",
+            "metadata": {
+                "description": "To enable vulnerability assessments, the user deploying this template must have an administrator or owner permissions."
+            }
+        },
+        "SQLEnablePrivateEndpoint": {
+            "defaultValue": false,
+            "type": "Bool"
+        },
+        "SQLPrivateEndpointNestedTemplateId": {
+            "defaultValue": "",
+            "type": "String"
+        },
+        "SQLPrivateEndpointSubscriptionId": {
+            "defaultValue": "",
+            "type": "String"
+        },
+        "SQLPrivateEndpointResourceGroup": {
+            "defaultValue": "",
+            "type": "String"
+        },
+        "SQLPrivateEndpointName": {
+            "defaultValue": "",
+            "type": "String"
+        },
+        "SQLPrivateEndpointLocation": {
+            "defaultValue": "",
+            "type": "String"
+        },
+        "SQLPrivateEndpointSubnetId": {
+            "defaultValue": "",
+            "type": "String"
+        },
+        "SQLPrivateLinkServiceName": {
+            "defaultValue": "",
+            "type": "String"
+        },
+        "SQLPrivateLinkServiceServiceId": {
+            "defaultValue": "",
+            "type": "String"
+        },
+        "SQLPrivateEndpointVnetSubscriptionId": {
+            "defaultValue": "",
+            "type": "String"
+        },
+        "SQLPrivateEndpointVnetResourceGroup": {
+            "defaultValue": "",
+            "type": "String"
+        },
+        "SQLPrivateEndpointVnetName": {
+            "defaultValue": "",
+            "type": "String"
+        },
+        "SQLPrivateEndpointSubnetName": {
+            "defaultValue": "",
+            "type": "String"
+        },
+        "SQLEnablePrivateDnsZone": {
+            "defaultValue": false,
+            "type": "Bool"
+        },
+        "SQLPrivateLinkPrivateDnsZoneFQDN": {
+            "defaultValue": "",
+            "type": "String"
+        },
+        "SQLPrivateEndpointDnsRecordUniqueId": {
+            "defaultValue": "",
+            "type": "String"
+        },
+        "SQLPrivateEndpointTemplateLink": {
+            "defaultValue": "",
+            "type": "String"
+        },
+        "SQLPrivateDnsForPrivateEndpointTemplateLink": {
+            "defaultValue": "",
+            "type": "String"
+        },
+        "SQLPrivateDnsForPrivateEndpointNicTemplateLink": {
+            "defaultValue": "",
+            "type": "String"
+        },
+        "SQLPrivateDnsForPrivateEndpointIpConfigTemplateLink": {
+            "defaultValue": "",
+            "type": "String"
+        },
+        "SQLAllowClientIp": {
+            "defaultValue": false,
+            "type": "Bool"
+        },
+        "SQLClientIpRuleName": {
+            "defaultValue": "",
+            "type": "String"
+        },
+        "SQLClientIpValue": {
+            "defaultValue": "",
+            "type": "String"
+        },
+        "SQLStorageAccountType": {
+            "defaultValue": "",
+            "type": "String"
+        },
+        "SQLMaintenanceConfigurationId": {
+            "defaultValue": "",
+            "type": "String"
+        },
+        
+
+        "funcName": {
+            "type": "String"
+        },
+        "funcHostingPlanName": {
+            "type": "String"
+        },
+        "funcServerFarmResourceGroup": {
+            "type": "String",
+            "defaultValue": "[resourceGroup().name]"
+        },
+        "funcAlwaysOn": {
+            "type": "Bool"
+        },
+        "funcStorageAccountName": {
+            "type": "String"
+        },
+        "funcUse32BitWorkerProcess": {
+            "type": "Bool"
+        },
+        "funcSku": {
+            "type": "String"
+        },
+        "funcSkuCode": {
+            "type": "String"
+        },
+        "funcWorkerSize": {
+            "type": "String"
+        },
+        "funcWorkerSizeId": {
+            "type": "String"
+        },
+        "funcNumberOfWorkers": {
+            "type": "String"
+        },  
+        
+
+  
+        "keyVaultName": {
+            "type": "String"
+        },   
+        "keyVaultSku": {
+            "type": "String"
+        },
+
+        "keyVaultEnabledForDeployment": {
+            "type": "Bool"
+        },
+        "keyVaultEnabledForTemplateDeployment": {
+            "type": "Bool"
+        },
+        "keyVaultEnabledForDiskEncryption": {
+            "type": "Bool"
+        },
+        "keyVaultEnableRbacAuthorization": {
+            "type": "Bool"
+        },
+        "keyVaultEnableSoftDelete": {
+            "type": "Bool"
+        },
+        "keyVaultSoftDeleteRetentionInDays": {
+            "type": "Int"
+        },
+        "keyVaultNetworkAcls": {
+            "type": "Object"
+        }              
+              
+    },
+    "functions": [],
+    "variables": {
+        "artifactsLocationUri":     "https://raw.githubusercontent.com/oh22is/ProcFwk/main/",
+        "nestedTemplateUriADF":     "[uri(variables('artifactsLocationUri'), concat('nestedtemplates/procfwk.adf.deploy.json'))]",
+        "nestedTemplateUriSQL":     "[uri(variables('artifactsLocationUri'), concat('nestedtemplates/procfwk.sql.deploy.json'))]",
+        "nestedTemplateUriFunc":    "[uri(variables('artifactsLocationUri'), concat('nestedtemplates/procfwk.func.deploy.json'))]",
+        "nestedTemplateUriAKV":     "[uri(variables('artifactsLocationUri'), concat('nestedtemplates/procfwk.akv.deploy.json'))]",
+
+        "nestedTemplateUriADFRoleAssignment":     "[uri(variables('artifactsLocationUri'), concat('nestedtemplates/procfwk.adf.roleassignment.json'))]"
+    },
+    "resources": [
+        {
+            "apiVersion": "2020-06-01",
+            "name": "pid-e2854d4f-806a-48ab-82f4-f3e410913fdd",
+            "type": "Microsoft.Resources/deployments",
+            "properties": {
+                "mode": "Incremental",
+                "template": {
+                    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+                    "contentVersion": "1.0.0.0",
+                    "resources": []
+                }
+            }
+        },
+
+        {
+            "apiVersion": "2020-06-01",
+            "name": "deploy_adf",
+            "condition": true,        
+            "type": "Microsoft.Resources/deployments",
+            "properties": {
+                "mode": "incremental",
+                "templateLink": {
+                        "uri": "[variables('nestedTemplateUriADF')]"
+                },
+                "parameters": {
+                    "location": {
+                        "value": "[parameters('location')]"
+                    },
+                    "adfName": {
+                        "value": "[parameters('adfName')]"
+                    }                 
+                }
+            }
+        },
+        {
+            "apiVersion": "2020-06-01",
+            "name": "deploy_adf_roleAssignment",
+            "dependsOn": [                
+                    "[resourceId('Microsoft.Resources/deployments', 'deploy_adf')]",
+                    "[resourceId('Microsoft.Resources/deployments', 'deploy_sql')]"
+            ],
+            "condition": true,        
+            "type": "Microsoft.Resources/deployments",
+            "properties": {
+                "mode": "incremental",
+                "templateLink": {
+                        "uri": "[variables('nestedTemplateUriADFRoleAssignment')]"
+                },
+                "parameters": {
+                    "location": {
+                        "value": "[parameters('location')]"
+                    },
+                    "adfName": {
+                        "value": "[parameters('adfName')]"
+                    },
+                    "adfBuiltInRoleType": {
+                        "value": "Owner"
+                    }                  
+                }
+            }
+        },        
+        {
+            "apiVersion": "2020-06-01",
+            "name": "deploy_sql",
+            "type": "Microsoft.Resources/deployments",
+            "properties": {
+                "mode": "incremental",
+                "templateLink": {
+                        "uri": "[variables('nestedTemplateUriSQL')]"
+                },
+                "parameters": {
+                    "location": {
+                        "value": "[parameters('location')]"
+                    },
+                    "SQLAdministratorLogin": {
+                        "value": "[parameters('SQLAdministratorLogin')]"
+                    },
+                    "SQLAdministratorLoginPassword": {
+                        "value": "[parameters('SQLAdministratorLoginPassword')]"
+                    },
+                    "SQLCollation": {
+                        "value": "[parameters('SQLCollation')]"
+                    },
+                    "SQLDatabaseName": {
+                        "value": "[parameters('SQLDatabaseName')]"
+                    },
+                    "SQLTier": {
+                        "value": "[parameters('SQLTier')]"
+                    },
+                    "SQLSkuName": {
+                        "value": "[parameters('SQLSkuName')]"
+                    },
+                    "SQLMaxSizeBytes": {
+                        "value": "[parameters('SQLMaxSizeBytes')]"
+                    },
+                    "SQLServerName": {
+                        "value": "[parameters('SQLServerName')]"
+                    },
+                    "SQLSampleName": {
+                        "value": "[parameters('SQLSampleName')]"
+                    },
+                    "SQLZoneRedundant": {
+                        "value": "[parameters('SQLZoneRedundant')]"
+                    },
+                    "SQLLicenseType": {
+                        "value": "[parameters('SQLLicenseType')]"
+                    },
+                    "SQLReadScaleOut": {
+                        "value": "[parameters('SQLReadScaleOut')]"
+                    },
+                    "SQLNumberOfReplicas": {
+                        "value": "[parameters('SQLNumberOfReplicas')]"
+                    },
+                    "SQLMinCapacity": {
+                        "value": "[parameters('SQLMinCapacity')]"
+                    },
+                    "SQLAutoPauseDelay": {
+                        "value": "[parameters('SQLAutoPauseDelay')]"
+                    },
+                    "SQLEnableADS": {
+                        "value": "[parameters('SQLEnableADS')]"
+                    },
+                    "SQLAllowAzureIps": {
+                        "value": "[parameters('SQLAllowAzureIps')]"
+                    },
+                    "SQLDatabaseTags": {
+                        "value": "[parameters('SQLDatabaseTags')]"
+                    },
+                    "SQLServerTags": {
+                        "value": "[parameters('SQLServerTags')]"
+                    },
+                    "SQLEnableVA": {
+                        "value": "[parameters('SQLEnableVA')]"
+                    },
+                    "SQLUseVAManagedIdentity": {
+                        "value": "[parameters('SQLUseVAManagedIdentity')]"
+                    },
+                    "SQLEnablePrivateEndpoint": {
+                        "value": "[parameters('SQLEnablePrivateEndpoint')]"
+                    },
+                    "SQLPrivateEndpointNestedTemplateId": {
+                        "value": "[parameters('SQLPrivateEndpointNestedTemplateId')]"
+                    },
+                    "SQLPrivateEndpointSubscriptionId": {
+                        "value": "[parameters('SQLPrivateEndpointSubscriptionId')]"
+                    },
+                    "SQLPrivateEndpointResourceGroup": {
+                        "value": "[parameters('SQLPrivateEndpointResourceGroup')]"
+                    },
+                    "SQLPrivateEndpointName": {
+                        "value": "[parameters('SQLPrivateEndpointName')]"
+                    },
+                    "SQLPrivateEndpointLocation": {
+                        "value": "[parameters('SQLPrivateEndpointLocation')]"
+                    },
+                    "SQLPrivateEndpointSubnetId": {
+                        "value": "[parameters('SQLPrivateEndpointSubnetId')]"
+                    },
+                    "SQLPrivateLinkServiceName": {
+                        "value": "[parameters('SQLPrivateLinkServiceName')]"
+                    },
+                    "SQLPrivateLinkServiceServiceId": {
+                        "value": "[parameters('SQLPrivateLinkServiceServiceId')]"
+                    },
+                    "SQLPrivateEndpointVnetSubscriptionId": {
+                        "value": "[parameters('SQLPrivateEndpointVnetSubscriptionId')]"
+                    },
+                    "SQLPrivateEndpointVnetResourceGroup": {
+                        "value": "[parameters('SQLPrivateEndpointVnetResourceGroup')]"
+                    },
+                    "SQLPrivateEndpointVnetName": {
+                        "value": "[parameters('SQLPrivateEndpointVnetName')]"
+                    },
+                    "SQLPrivateEndpointSubnetName": {
+                        "value": "[parameters('SQLPrivateEndpointSubnetName')]"
+                    },
+                    "SQLEnablePrivateDnsZone": {
+                        "value": "[parameters('SQLEnablePrivateDnsZone')]"
+                    },
+                    "SQLPrivateLinkPrivateDnsZoneFQDN": {
+                        "value": "[parameters('SQLPrivateLinkPrivateDnsZoneFQDN')]"
+                    },
+                    "SQLPrivateEndpointDnsRecordUniqueId": {
+                        "value": "[parameters('SQLPrivateEndpointDnsRecordUniqueId')]"
+                    },
+                    "SQLPrivateEndpointTemplateLink": {
+                        "value": "[parameters('SQLPrivateEndpointTemplateLink')]"
+                    },
+                    "SQLPrivateDnsForPrivateEndpointTemplateLink": {
+                        "value": "[parameters('SQLPrivateDnsForPrivateEndpointTemplateLink')]"
+                    },
+                    "SQLPrivateDnsForPrivateEndpointNicTemplateLink": {
+                        "value": "[parameters('SQLPrivateDnsForPrivateEndpointNicTemplateLink')]"
+                    },
+                    "SQLPrivateDnsForPrivateEndpointIpConfigTemplateLink": {
+                        "value": "[parameters('SQLPrivateDnsForPrivateEndpointIpConfigTemplateLink')]"
+                    },
+                    "SQLAllowClientIp": {
+                        "value": "[parameters('SQLAllowClientIp')]"
+                    },
+                    "SQLClientIpRuleName": {
+                        "value": "[parameters('SQLClientIpRuleName')]"
+                    },
+                    "SQLClientIpValue": {
+                        "value": "[parameters('SQLClientIpValue')]"
+                    },
+                    "SQLStorageAccountType": {
+                        "value": "[parameters('SQLStorageAccountType')]"
+                    },
+                    "SQLMaintenanceConfigurationId": {
+                        "value": "[parameters('SQLMaintenanceConfigurationId')]"
+                    }
+                }
+            }
+        },
+        {
+            "apiVersion": "2020-06-01",
+            "name": "deploy_func",
+            "type": "Microsoft.Resources/deployments",
+            "properties": {
+                "mode": "incremental",
+                "templateLink": {
+                        "uri": "[variables('nestedTemplateUriFunc')]"
+                },
+                "parameters": {
+                    "subscriptionId": {
+                        "value": "[parameters('subscriptionId')]"
+                    },
+                    "location": {
+                        "value": "[parameters('location')]"
+                    },
+                    "funcName": {
+                        "value": "[parameters('funcName')]"
+                    },
+                    "funcHostingPlanName": {
+                        "value": "[parameters('funcHostingPlanName')]"
+                    },
+                    "funcServerFarmResourceGroup": {
+                        "value": "[parameters('funcServerFarmResourceGroup')]"
+                    },
+                    "funcAlwaysOn": {
+                        "value": "[parameters('funcAlwaysOn')]"
+                    },
+                    "funcStorageAccountName": {
+                        "value": "[parameters('funcStorageAccountName')]"
+                    },
+                    "funcUse32BitWorkerProcess": {
+                        "value": "[parameters('funcUse32BitWorkerProcess')]"
+                    },
+                    "funcSku": {
+                        "value": "[parameters('funcSku')]"
+                    },
+                    "funcSkuCode": {
+                        "value": "[parameters('funcSkuCode')]"
+                    },
+                    "funcWorkerSize": {
+                        "value": "[parameters('funcWorkerSize')]"
+                    },
+                    "funcWorkerSizeId": {
+                        "value": "[parameters('funcWorkerSizeId')]"
+                    },
+                    "funcNumberOfWorkers": {
+                        "value": "[parameters('funcNumberOfWorkers')]"
+                    }                    
+                }
+            }
+        },
+        {
+            "apiVersion": "2020-06-01",
+            "name": "deploy_akv",
+            "dependsOn": [                
+                    "[resourceId('Microsoft.Resources/deployments', 'deploy_adf')]",
+                    "[resourceId('Microsoft.Resources/deployments', 'deploy_func')]",
+                    "[resourceId('Microsoft.Resources/deployments', 'deploy_sql')]"
+            ],
+            "type": "Microsoft.Resources/deployments",
+            "properties": {
+                "mode": "incremental",
+                "templateLink": {
+                        "uri": "[variables('nestedTemplateUriAKV')]"
+                },
+                "parameters": {
+                    "location": {
+                        "value": "[parameters('location')]"
+                    },
+                    "adfName": {
+                        "value": "[parameters('adfName')]"
+                    },
+                    "tenant": {
+                        "value": "[parameters('tenant')]"
+                    },
+                    "funcName": {
+                        "value": "[parameters('funcName')]"
+                    },                    
+                    "keyVaultName": {
+                        "value": "[parameters('keyVaultName')]"
+                    },
+                    "keyVaultSku": {
+                        "value": "[parameters('keyVaultSku')]"
+                    },
+                    "keyVaultEnabledForDeployment": {
+                        "value": "[parameters('keyVaultEnabledForDeployment')]"
+                    },
+                    "keyVaultEnabledForTemplateDeployment": {
+                        "value": "[parameters('keyVaultEnabledForTemplateDeployment')]"
+                    },
+                    "keyVaultEnabledForDiskEncryption": {
+                        "value": "[parameters('keyVaultEnabledForDiskEncryption')]"
+                    },
+                    "keyVaultEnableRbacAuthorization": {
+                        "value": "[parameters('keyVaultEnableRbacAuthorization')]"
+                    },
+                    "keyVaultEnableSoftDelete": {
+                        "value": "[parameters('keyVaultEnableSoftDelete')]"
+                    },
+                    "keyVaultSoftDeleteRetentionInDays": {
+                        "value": "[parameters('keyVaultSoftDeleteRetentionInDays')]"
+                    },
+                    "keyVaultNetworkAcls": {
+                        "value": "[parameters('keyVaultNetworkAcls')]"
+                    },
+                    "SQLAdministratorLogin": {
+                        "value": "[parameters('SQLAdministratorLogin')]"
+                    },
+                    "SQLAdministratorLoginPassword": {
+                        "value": "[parameters('SQLAdministratorLoginPassword')]"
+                    },
+                    "SQLServerName": {
+                        "value": "[parameters('SQLServerName')]"
+                    },
+                    "SQLDatabaseName": {
+                        "value": "[parameters('SQLDatabaseName')]"
+                    }                                                            
+                }
+            }
+        }                        
+    ],
+    "outputs": {}
+}
