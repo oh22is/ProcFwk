@@ -76,6 +76,14 @@
             "properties": {}
         },
         {
+            "type": "Microsoft.Sql/servers",
+            "apiVersion": "2019-06-01-preview",
+            "name": "[parameters('SQLServerName')]",
+            "location": "[parameters('location')]",
+            "properties": {},
+            "resources": []
+        },        
+        {
             "type": "Microsoft.KeyVault/vaults",
             "apiVersion": "2018-02-14",
             "name": "[parameters('keyVaultName')]",
