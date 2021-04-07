@@ -62,7 +62,8 @@
         }       
     },
     "variables": {
-        "functionAppId": "[concat(parameters('resourceGroup'),'/providers/Microsoft.Web/sites/', parameters('funcName'))]"
+        "functionAppId": "[concat(parameters('resourceGroup'),'/providers/Microsoft.Web/sites/', parameters('funcName'))]",
+        "functionAppId2": "[resourceId('Microsoft.Web/sites/', parameters('funcName'))]"
     },
     "resources": [
         {
@@ -165,7 +166,7 @@
                 "[resourceId('Microsoft.KeyVault/vaults', parameters('keyVaultName'))]"
             ],
             "properties": {
-                "value": "[listkeys(concat(variables('functionAppId'), '/host/default/'),'2016-08-01').functionKeys.default]",
+                "value": "[listkeys(concat(variables('functionAppId2'), '/host/default/'),'2016-08-01').functionKeys.default]",
                 "attributes": {
                     "enabled": true
                 }
