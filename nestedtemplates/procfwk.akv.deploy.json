@@ -82,7 +82,15 @@
             "location": "[parameters('location')]",
             "properties": {},
             "resources": []
-        },        
+        }, 
+        {
+            "type": "Microsoft.Web/sites",
+            "apiVersion": "2018-11-01",
+            "name": "[parameters('funcName')]",
+            "location": "[parameters('location')]",
+            "kind": "functionapp",
+            "properties": {}
+        },               
         {
             "type": "Microsoft.KeyVault/vaults",
             "apiVersion": "2018-02-14",
