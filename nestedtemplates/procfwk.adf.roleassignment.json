@@ -49,9 +49,6 @@
             "apiVersion": "2020-04-01-preview",
             "name": "[parameters('adfRoleNameGuid')]",
             "scope": "[concat('Microsoft.DataFactory/factories', '/', parameters('adfName'))]",
-            "dependsOn": [
-                "[parameters('adfName')]"
-            ],
             "properties": {
                 "roleDefinitionId": "[variables(parameters('adfBuiltInRoleType'))]",
                 "principalId": "[reference(resourceId('Microsoft.DataFactory/factories', parameters('adfName')), '2018-06-01', 'Full').identity.principalId]"
