@@ -48,6 +48,45 @@
         "keyVaultNetworkAcls": {
             "type": "Object"
         },
+        "keyVaultNetworkRuleBypassOptions": {
+            "type": "string",
+            "defaultValue": "AzureServices",
+            "allowedValues": [
+                "None",
+                "AzureServices"
+            ],
+            "metadata": {
+                "description": "Tells what traffic can bypass network rules. This can be 'AzureServices' or 'None'. If not specified the default is 'AzureServices'."
+            }
+        },
+        "keyVaultNetworkRuleAction": {
+            "type": "string",
+            "defaultValue": "Allow",
+            "allowedValues": [
+                "Allow",
+                "Deny"
+            ],
+            "metadata": {
+                "description": "The default action when no rule from ipRules and from virtualNetworkRules match. This is only used after the bypass property has been evaluated."
+            }
+        },
+        "keyVaultIpRules": {
+            "type": "array",
+            "defaultValue": [
+            ],
+            "metadata": {
+                "description": "An array of IPv4 addresses or rangea in CIDR notation, e.g. '124.56.78.91' (simple IP address) or '124.56.78.0/24' (all addresses that start with 124.56.78)."
+            }
+        },
+        "keyVaultVirtualNetworkRules": {
+            "type": "array",
+            "defaultValue": [
+            ],
+            "metadata": {
+                "description": "An array for resourceIds for the virtualNetworks allowed to access the vault."
+            }
+        },
+
         "SQLAdministratorLogin": {
             "type": "SecureString"
         },
@@ -122,7 +161,26 @@
                 },
                 "enableSoftDelete": "[parameters('keyVaultEnableSoftDelete')]",
                 "softDeleteRetentionInDays": "[parameters('keyVaultSoftDeleteRetentionInDays')]",
-                "networkAcls": "[parameters('keyVaultNetworkAcls')]"
+                "networkAcls": {
+                    "bypass": "[parameters('keyVaultNetworkRuleBypassOptions')]",
+                    "defaultAction": "[parameters('keyVaultNetworkRuleAction')]",
+                    "copy": [
+                        {
+                            "name": "ipRules",
+                            "count": "[length(parameters('keyVaultIpRules'))]",
+                            "input": {
+                                "value": "[parameters('keyVaultIpRules')[copyIndex('ipRules')]]"
+                            }
+                        },
+                        {
+                            "name": "virtualNetworkRules",
+                            "count": "[length(parameters('keyVaultVirtualNetworkRules'))]",
+                            "input": {
+                                "id": "[parameters('keyVaultVirtualNetworkRules')[copyIndex('virtualNetworkRules')]]"
+                            }
+                        }
+                    ]
+                }
             }
         },
         {
