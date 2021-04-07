@@ -14,6 +14,13 @@
                 "description": "description"
             }
         },
+        "resourceGroup": {
+            "defaultValue": "[resourceGroup().name]",
+            "type": "string"
+        },
+        "funcName": {
+            "type": "String"
+        },        
         "keyVaultName": {
             "type": "String"
         },   
@@ -40,9 +47,23 @@
         },
         "keyVaultNetworkAcls": {
             "type": "Object"
-        }
+        },
+        "SQLAdministratorLogin": {
+            "type": "SecureString"
+        },
+        "SQLAdministratorLoginPassword": {
+            "type": "SecureString"
+        },
+        "SQLDatabaseName": {
+            "type": "String"
+        },
+        "SQLServerName": {
+            "type": "String"
+        }       
     },
-    "variables": {},
+    "variables": {
+        "functionAppId": "[concat(parameters('resourceGroup'),'/providers/Microsoft.Web/sites/', parameters('funcName'))]"
+    },
     "resources": [
         {
             "apiVersion": "2018-06-01",
@@ -88,7 +109,69 @@
                 "softDeleteRetentionInDays": "[parameters('keyVaultSoftDeleteRetentionInDays')]",
                 "networkAcls": "[parameters('keyVaultNetworkAcls')]"
             }
+        },
+        {
+            "type": "Microsoft.KeyVault/vaults/secrets",
+            "apiVersion": "2018-02-14",
+            "name": "[concat(parameters('keyVaultName'), '/sqldbdpprocfwkmetadataadmname')]",
+            "location": "[parameters('location')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.KeyVault/vaults', parameters('keyVaultName'))]"
+            ],
+            "properties": {
+                "value": "[parameters('SQLAdministratorLogin')]",
+                "attributes": {
+                    "enabled": true
+                }
+            }
+        },
+        {
+            "type": "Microsoft.KeyVault/vaults/secrets",
+            "apiVersion": "2018-02-14",
+            "name": "[concat(parameters('keyVaultName'), '/sqldbdpprocfwkmetadataadmpassword')]",
+            "location": "[parameters('location')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.KeyVault/vaults', parameters('keyVaultName'))]"
+            ],
+            "properties": {
+                "value": "[parameters('SQLAdministratorLoginPassword')]",
+                "attributes": {
+                    "enabled": true
+                }
+            }
+        },
+        {
+            "type": "Microsoft.KeyVault/vaults/secrets",
+            "apiVersion": "2018-02-14",
+            "name": "[concat(parameters('keyVaultName'), '/funcdpprocfwkdefaultkey')]",
+            "location": "[parameters('location')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.KeyVault/vaults', parameters('keyVaultName'))]"
+            ],
+            "properties": {
+                "value": "[listkeys(concat(variables('functionAppId'), '/host/default/'),'2016-08-01').functionKeys.default]",
+                "attributes": {
+                    "enabled": true
+                }
+            }
+        },
+        {
+            "type": "Microsoft.KeyVault/vaults/secrets",
+            "apiVersion": "2018-02-14",
+            "name": "[concat(parameters('keyVaultName'), '/sqldbdpprocfwkmetadataconnection')]",
+            "location": "[parameters('location')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.KeyVault/vaults', parameters('keyVaultName'))]"
+            ],
+            "properties": {
+                "value": "[concat('Server=tcp:',reference(parameters('SQLServerName')).fullyQualifiedDomainName,',1433;Initial Catalog=',parameters('SQLDatabaseName'),';Persist Security Info=False;User ID=',parameters('SQLAdministratorLogin'),';Password=',parameters('SQLAdministratorLoginPassword'),';MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;')]",
+                "attributes": {
+                    "enabled": true
+                }
+            }
         }
+
+
     ],
     "outputs": {}
 }
