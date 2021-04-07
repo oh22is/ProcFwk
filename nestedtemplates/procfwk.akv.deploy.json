@@ -45,9 +45,6 @@
         "keyVaultSoftDeleteRetentionInDays": {
             "type": "Int"
         },
-        "keyVaultNetworkAcls": {
-            "type": "Object"
-        },
         "keyVaultNetworkRuleBypassOptions": {
             "type": "string",
             "defaultValue": "AzureServices",

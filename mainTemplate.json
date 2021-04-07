@@ -280,15 +280,6 @@
             "defaultValue": 90,
             "type": "Int"
         },
-        "keyVaultNetworkAcls": {
-            "defaultValue": {
-                "defaultAction": "allow",
-                "bypass": "AzureServices",
-                "ipRules": [],
-                "virtualNetworkRules": []
-            },
-            "type": "Object"
-        },
         "keyVaultNetworkRuleBypassOptions": {
             "type": "string",
             "defaultValue": "AzureServices",
@@ -657,9 +648,6 @@
                     },
                     "keyVaultSoftDeleteRetentionInDays": {
                         "value": "[parameters('keyVaultSoftDeleteRetentionInDays')]"
-                    },
-                    "keyVaultNetworkAcls": {
-                        "value": "[parameters('keyVaultNetworkAcls')]"
                     },
                     "keyVaultNetworkRuleBypassOptions": {
                         "value": "[parameters('keyVaultNetworkRuleBypassOptions')]"
