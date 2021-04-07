@@ -16,7 +16,7 @@
         }, 
                         
         "adfName": {
-            "defaultValue": "defaultADFName",
+            "defaultValue": "adf-",
             "type": "String"
         },
 
@@ -26,27 +26,35 @@
         "SQLAdministratorLoginPassword": {
             "type": "SecureString"
         },
+        "SQLServerName": {
+            "defaultValue": "sql-",
+            "type": "String"
+        },   
+        "SQLDatabaseName": {
+            "defaultValue": "sqldb-",
+            "type": "String"
+        },             
         "SQLCollation": {
             "defaultValue": "SQL_Latin1_General_CP1_CI_AS",
             "type": "String"
         },
-        "SQLDatabaseName": {
-            "type": "String"
-        },
+
         "SQLTier": {
             "defaultValue": "Standard",
             "type": "String"
         },
         "SQLSkuName": {
             "defaultValue": "S0",
-            "type": "String"
+            "type": "String",
+            "allowedValues": [
+                "S0",
+                "S1",
+                "S3"
+            ]
         },
         "SQLMaxSizeBytes": {
             "defaultValue": 268435456000,
             "type": "Int"
-        },
-        "SQLServerName": {
-            "type": "String"
         },
         "SQLSampleName": {
             "defaultValue": "",
@@ -188,11 +196,11 @@
             "type": "Bool"
         },
         "SQLClientIpRuleName": {
-            "defaultValue": "-static",
+            "defaultValue": "static-",
             "type": "String"
         },
         "SQLClientIpValue": {
-            "defaultValue": "*.*.*.*",
+            "defaultValue": "260.260.260.260",
             "type": "String"
         },
         "SQLStorageAccountType": {
@@ -206,9 +214,11 @@
         
 
         "funcName": {
+            "defaultValue": "func-",
             "type": "String"
         },
         "funcHostingPlanName": {
+            "defaultValue": "plan-",
             "type": "String"
         },
         "funcServerFarmResourceGroup": {
@@ -220,6 +230,7 @@
             "type": "Bool"
         },
         "funcStorageAccountName": {
+            "defaultValue": "stfunc-",
             "type": "String"
         },
         "funcUse32BitWorkerProcess": {
@@ -249,6 +260,7 @@
 
   
         "keyVaultName": {
+            "defaultValue": "akv-",
             "type": "String"
         },   
         "keyVaultSku": {
