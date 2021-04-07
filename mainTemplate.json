@@ -56,141 +56,7 @@
             "defaultValue": 268435456000,
             "type": "Int"
         },
-        "SQLSampleName": {
-            "defaultValue": "",
-            "type": "String"
-        },
-        "SQLZoneRedundant": {
-            "defaultValue": false,
-            "type": "Bool"
-        },
-        "SQLLicenseType": {
-            "defaultValue": "",
-            "type": "String"
-        },
-        "SQLReadScaleOut": {
-            "defaultValue": "Disabled",
-            "type": "String"
-        },
-        "SQLNumberOfReplicas": {
-            "defaultValue": 0,
-            "type": "Int"
-        },
-        "SQLMinCapacity": {
-            "defaultValue": "",
-            "type": "String"
-        },
-        "SQLAutoPauseDelay": {
-            "defaultValue": "",
-            "type": "String"
-        },
-        "SQLEnableADS": {
-            "defaultValue": false,
-            "type": "Bool"
-        },
-        "SQLAllowAzureIps": {
-            "defaultValue": true,
-            "type": "Bool"
-        },
-        "SQLDatabaseTags": {
-            "defaultValue": {},
-            "type": "Object"
-        },
-        "SQLServerTags": {
-            "defaultValue": {},
-            "type": "Object"
-        },
-        "SQLEnableVA": {
-            "defaultValue": false,
-            "type": "Bool"
-        },
-        "SQLUseVAManagedIdentity": {
-            "defaultValue": false,
-            "type": "Bool",
-            "metadata": {
-                "description": "To enable vulnerability assessments, the user deploying this template must have an administrator or owner permissions."
-            }
-        },
-        "SQLEnablePrivateEndpoint": {
-            "defaultValue": false,
-            "type": "Bool"
-        },
-        "SQLPrivateEndpointNestedTemplateId": {
-            "defaultValue": "",
-            "type": "String"
-        },
-        "SQLPrivateEndpointSubscriptionId": {
-            "defaultValue": "",
-            "type": "String"
-        },
-        "SQLPrivateEndpointResourceGroup": {
-            "defaultValue": "",
-            "type": "String"
-        },
-        "SQLPrivateEndpointName": {
-            "defaultValue": "",
-            "type": "String"
-        },
-        "SQLPrivateEndpointLocation": {
-            "defaultValue": "",
-            "type": "String"
-        },
-        "SQLPrivateEndpointSubnetId": {
-            "defaultValue": "",
-            "type": "String"
-        },
-        "SQLPrivateLinkServiceName": {
-            "defaultValue": "",
-            "type": "String"
-        },
-        "SQLPrivateLinkServiceServiceId": {
-            "defaultValue": "",
-            "type": "String"
-        },
-        "SQLPrivateEndpointVnetSubscriptionId": {
-            "defaultValue": "",
-            "type": "String"
-        },
-        "SQLPrivateEndpointVnetResourceGroup": {
-            "defaultValue": "",
-            "type": "String"
-        },
-        "SQLPrivateEndpointVnetName": {
-            "defaultValue": "",
-            "type": "String"
-        },
-        "SQLPrivateEndpointSubnetName": {
-            "defaultValue": "",
-            "type": "String"
-        },
-        "SQLEnablePrivateDnsZone": {
-            "defaultValue": false,
-            "type": "Bool"
-        },
-        "SQLPrivateLinkPrivateDnsZoneFQDN": {
-            "defaultValue": "",
-            "type": "String"
-        },
-        "SQLPrivateEndpointDnsRecordUniqueId": {
-            "defaultValue": "",
-            "type": "String"
-        },
-        "SQLPrivateEndpointTemplateLink": {
-            "defaultValue": "",
-            "type": "String"
-        },
-        "SQLPrivateDnsForPrivateEndpointTemplateLink": {
-            "defaultValue": "",
-            "type": "String"
-        },
-        "SQLPrivateDnsForPrivateEndpointNicTemplateLink": {
-            "defaultValue": "",
-            "type": "String"
-        },
-        "SQLPrivateDnsForPrivateEndpointIpConfigTemplateLink": {
-            "defaultValue": "",
-            "type": "String"
-        },
+
         "SQLAllowClientIp": {
             "defaultValue": false,
             "type": "Bool"
@@ -202,16 +68,7 @@
         "SQLClientIpValue": {
             "defaultValue": "260.260.260.260",
             "type": "String"
-        },
-        "SQLStorageAccountType": {
-            "defaultValue": "",
-            "type": "String"
-        },
-        "SQLMaintenanceConfigurationId": {
-            "defaultValue": "",
-            "type": "String"
-        },
-        
+        },      
 
         "funcName": {
             "defaultValue": "func-",
@@ -234,6 +91,7 @@
             "type": "String"
         },
         "funcUse32BitWorkerProcess": {
+            "defaultValue": false,
             "type": "Bool"
         },
         "funcSku": {
@@ -441,105 +299,8 @@
                     "SQLServerName": {
                         "value": "[parameters('SQLServerName')]"
                     },
-                    "SQLSampleName": {
-                        "value": "[parameters('SQLSampleName')]"
-                    },
-                    "SQLZoneRedundant": {
-                        "value": "[parameters('SQLZoneRedundant')]"
-                    },
-                    "SQLLicenseType": {
-                        "value": "[parameters('SQLLicenseType')]"
-                    },
-                    "SQLReadScaleOut": {
-                        "value": "[parameters('SQLReadScaleOut')]"
-                    },
-                    "SQLNumberOfReplicas": {
-                        "value": "[parameters('SQLNumberOfReplicas')]"
-                    },
-                    "SQLMinCapacity": {
-                        "value": "[parameters('SQLMinCapacity')]"
-                    },
-                    "SQLAutoPauseDelay": {
-                        "value": "[parameters('SQLAutoPauseDelay')]"
-                    },
-                    "SQLEnableADS": {
-                        "value": "[parameters('SQLEnableADS')]"
-                    },
-                    "SQLAllowAzureIps": {
-                        "value": "[parameters('SQLAllowAzureIps')]"
-                    },
-                    "SQLDatabaseTags": {
-                        "value": "[parameters('SQLDatabaseTags')]"
-                    },
-                    "SQLServerTags": {
-                        "value": "[parameters('SQLServerTags')]"
-                    },
-                    "SQLEnableVA": {
-                        "value": "[parameters('SQLEnableVA')]"
-                    },
-                    "SQLUseVAManagedIdentity": {
-                        "value": "[parameters('SQLUseVAManagedIdentity')]"
-                    },
-                    "SQLEnablePrivateEndpoint": {
-                        "value": "[parameters('SQLEnablePrivateEndpoint')]"
-                    },
-                    "SQLPrivateEndpointNestedTemplateId": {
-                        "value": "[parameters('SQLPrivateEndpointNestedTemplateId')]"
-                    },
-                    "SQLPrivateEndpointSubscriptionId": {
-                        "value": "[parameters('SQLPrivateEndpointSubscriptionId')]"
-                    },
-                    "SQLPrivateEndpointResourceGroup": {
-                        "value": "[parameters('SQLPrivateEndpointResourceGroup')]"
-                    },
-                    "SQLPrivateEndpointName": {
-                        "value": "[parameters('SQLPrivateEndpointName')]"
-                    },
-                    "SQLPrivateEndpointLocation": {
-                        "value": "[parameters('SQLPrivateEndpointLocation')]"
-                    },
-                    "SQLPrivateEndpointSubnetId": {
-                        "value": "[parameters('SQLPrivateEndpointSubnetId')]"
-                    },
-                    "SQLPrivateLinkServiceName": {
-                        "value": "[parameters('SQLPrivateLinkServiceName')]"
-                    },
-                    "SQLPrivateLinkServiceServiceId": {
-                        "value": "[parameters('SQLPrivateLinkServiceServiceId')]"
-                    },
-                    "SQLPrivateEndpointVnetSubscriptionId": {
-                        "value": "[parameters('SQLPrivateEndpointVnetSubscriptionId')]"
-                    },
-                    "SQLPrivateEndpointVnetResourceGroup": {
-                        "value": "[parameters('SQLPrivateEndpointVnetResourceGroup')]"
-                    },
-                    "SQLPrivateEndpointVnetName": {
-                        "value": "[parameters('SQLPrivateEndpointVnetName')]"
-                    },
-                    "SQLPrivateEndpointSubnetName": {
-                        "value": "[parameters('SQLPrivateEndpointSubnetName')]"
-                    },
-                    "SQLEnablePrivateDnsZone": {
-                        "value": "[parameters('SQLEnablePrivateDnsZone')]"
-                    },
-                    "SQLPrivateLinkPrivateDnsZoneFQDN": {
-                        "value": "[parameters('SQLPrivateLinkPrivateDnsZoneFQDN')]"
-                    },
-                    "SQLPrivateEndpointDnsRecordUniqueId": {
-                        "value": "[parameters('SQLPrivateEndpointDnsRecordUniqueId')]"
-                    },
-                    "SQLPrivateEndpointTemplateLink": {
-                        "value": "[parameters('SQLPrivateEndpointTemplateLink')]"
-                    },
-                    "SQLPrivateDnsForPrivateEndpointTemplateLink": {
-                        "value": "[parameters('SQLPrivateDnsForPrivateEndpointTemplateLink')]"
-                    },
-                    "SQLPrivateDnsForPrivateEndpointNicTemplateLink": {
-                        "value": "[parameters('SQLPrivateDnsForPrivateEndpointNicTemplateLink')]"
-                    },
-                    "SQLPrivateDnsForPrivateEndpointIpConfigTemplateLink": {
-                        "value": "[parameters('SQLPrivateDnsForPrivateEndpointIpConfigTemplateLink')]"
-                    },
+
+
                     "SQLAllowClientIp": {
                         "value": "[parameters('SQLAllowClientIp')]"
                     },
@@ -548,12 +309,6 @@
                     },
                     "SQLClientIpValue": {
                         "value": "[parameters('SQLClientIpValue')]"
-                    },
-                    "SQLStorageAccountType": {
-                        "value": "[parameters('SQLStorageAccountType')]"
-                    },
-                    "SQLMaintenanceConfigurationId": {
-                        "value": "[parameters('SQLMaintenanceConfigurationId')]"
                     }
                 }
             }
