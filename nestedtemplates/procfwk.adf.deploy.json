@@ -14,7 +14,6 @@
         },
         "location": {
             "type": "string",
-            "defaultValue": "[resourceGroup().location]",
             "metadata": {
                 "description": "Location for your data factory"
             }
@@ -70,6 +69,7 @@
 
         {
             "type": "Microsoft.Authorization/roleAssignments",
+            "condition" :false,
             "apiVersion": "2020-04-01-preview",
             "name": "[parameters('adfRoleNameGuid')]",
             "scope": "[concat('Microsoft.DataFactory/factories', '/', parameters('adfName'))]",
