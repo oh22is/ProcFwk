@@ -188,11 +188,11 @@
             "type": "Bool"
         },
         "SQLClientIpRuleName": {
-            "defaultValue": "",
+            "defaultValue": "-static",
             "type": "String"
         },
         "SQLClientIpValue": {
-            "defaultValue": "",
+            "defaultValue": "*.*.*.*",
             "type": "String"
         },
         "SQLStorageAccountType": {
