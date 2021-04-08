@@ -179,10 +179,6 @@
         "SQLStorageAccountType": {
             "defaultValue": "",
             "type": "String"
-        },
-        "SQLMaintenanceConfigurationId": {
-            "defaultValue": "",
-            "type": "String"
         }
     },
     "variables": {
@@ -267,8 +263,7 @@
                         "highAvailabilityReplicaCount": "[parameters('SQLNumberOfReplicas')]",
                         "minCapacity": "[parameters('SQLMinCapacity')]",
                         "autoPauseDelay": "[parameters('SQLAutoPauseDelay')]",
-                        "storageAccountType": "[parameters('SQLStorageAccountType')]",
-                        "maintenanceConfigurationId": "[parameters('SQLMaintenanceConfigurationId')]"
+                        "storageAccountType": "[parameters('SQLStorageAccountType')]"
                     }
                 },
                 {
