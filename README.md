@@ -12,26 +12,25 @@
 
 ## Resources
 
-The resources are created as described here: [FrocFwk Deployment Guide](https://mrpaulandrew.github.io/procfwk/deployprocfwk)
+The resources are created as described here: [ProcFwk Deployment Guide](https://mrpaulandrew.github.io/procfwk/deployprocfwk)
 
 | ResourceName                            | DeploymentName | DependsOn |
 |-----------------------------------------|----------------|-----------|
-| id-e2854d4f-806a-48ab-82f4-f3e410913fdd | same            | none      |  
+| pid-e2854d4f-806a-48ab-82f4-f3e410913fdd | same like resource name | none      |  
 | ADF                                     | deploy_adf      | none      |  
-| ADF Role Assignment                     | deploy_adf_roleAssignment| eploy_adf, deplyo_sql |   
+| ADF Role Assignment                     | deploy_adf_roleAssignment| deploy_adf, deploy_sql |   
 | SQL Server / Database                   | deploy_sql      | none      |
 | Function App / Consumption Service Plan | deploy_func     | none      |
 | Key Vault                               | deploy_akv      | deploy_adf, deploy_func, deploy_sql|
 
-## check following after deployment
+## Check the following after deployment
 * The Data Factory should have MSI access to itself as an owner
 * The Data Factory should be listed in the access policy of the key vault and have the secret permission "get"
 * The Key Vault should contain following secrets: function app default key, sql databse user name, sql database user password, sql database connection string
 
-## Whats next?
+## What's next?
 At this point you have the underlying resources avaiable.
 
 Time to [deploy the code](https://mrpaulandrew.github.io/procfwk/deployprocfwk#deploying-code), [create a service principal](https://mrpaulandrew.github.io/procfwk/deployprocfwk#service-principals), ...
 
-[Please check the deployment guide for further information](https://mrpaulandrew.github.io/procfwk/deployprocfwk)
-
+[For further steps, please check Pauls deployment guide.](https://mrpaulandrew.github.io/procfwk/deployprocfwk)
